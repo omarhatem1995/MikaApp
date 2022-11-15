@@ -112,6 +112,9 @@ dependencies {
 
 
     // splash
-
     implementation("androidx.core:core-splashscreen:1.0.0")
+
+    //one time events compose
+    implementation 'com.github.leonard-palm:compose-state-events:1.1.0'
+
 }

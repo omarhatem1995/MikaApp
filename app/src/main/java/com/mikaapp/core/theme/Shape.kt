@@ -1,4 +1,4 @@
-package com.mikaapp.ui.theme
+package com.mikaapp.core.theme
 
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Shapes
