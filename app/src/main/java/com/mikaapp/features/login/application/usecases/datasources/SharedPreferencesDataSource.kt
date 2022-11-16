@@ -1,4 +1,4 @@
-package com.mikaapp.features.login.application.presentation.usecases
+package com.mikaapp.features.login.application.usecases.datasources
 
 interface SharedPreferencesDataSource {
 

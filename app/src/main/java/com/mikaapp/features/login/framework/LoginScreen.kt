@@ -1,27 +1,36 @@
 package com.mikaapp.features.login.framework
 
-import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
-import com.mikaapp.features.login.application.presentation.LoginViewModel
 import com.ramcosta.composedestinations.annotation.Destination
+import com.ramcosta.composedestinations.annotation.RootNavGraph
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
+@OptIn(ExperimentalLifecycleComposeApi::class)
 @Composable
-@Destination(start = true)
+@RootNavGraph(start = true)
+@Destination
 fun LoginScreen(navigator: DestinationsNavigator)
 {
     val viewModel: LoginViewModel = hiltViewModel()
     val context = LocalContext.current
+    val signInState = viewModel.loginState.collectAsStateWithLifecycle()
+    val intentState = remember {
+        viewModel.signInIntent
+    }
     val loginLauncher = rememberLauncherForActivityResult(
         FirebaseAuthUIActivityResultContract()
     ) { result ->
         if (result != null) {
-           // viewModel.onLoginResult(result)
+            viewModel.onLoginResult(result)
         }
     }
 
@@ -64,14 +73,14 @@ fun LoginScreen(navigator: DestinationsNavigator)
 //
 //    }
 //
-//    LaunchedEffect(key1 = intentState  ){
-//
-//        if (intentState.value != null)
-//        {
-//            loginLauncher.launch(intentState.value)
-//        }
-//
-//    }
+    LaunchedEffect(key1 = intentState  ){
+
+        if (intentState.value != null)
+        {
+            loginLauncher.launch(intentState.value)
+        }
+
+    }
 
 
 
